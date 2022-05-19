@@ -1,35 +1,41 @@
 #include "Arduino.h"
-void setup() {
-  Serial.begin(115200);
-  Serial2.begin(115200);
+#include "untils.h"
+#include"SoftwareSerial.h"
+void setup()
+{
+  Serial.begin(57600);
+  Serial2.begin(38400);
 }
-void move(int id);
-void loop() {
-  if (Serial2.available()) {
-    int inByte = Serial2.read();
-    Serial.write(inByte);
+
+void loop()
+{
+  // if (Serial2.available())
+  // {
+  //   int inByte = Serial2.read();
+  //   Serial.write(inByte);
+  // }
+  //   if (Serial.available())
+  // {
+  //   int inByte = Serial.read();
+  //   Serial2.write(inByte);
+  // }
+
+
+  for (int i = 0; i < 360; i += 10)
+  {
+
+    angle2(0x02, i, 100, 0);
+    delay(100);  
   }
+    for (int i = 360; i > 0; i -= 10)
+  {
 
- if (Serial.available()) {
-   int inByte = Serial.read();
-   Serial2.write(inByte);
- }
+    angle2(0x02, i, 100, 0);
+    delay(100);  
+  }
+  //     Serial.print("read_pos(0x02):");
+  //   Serial.println(read_pos(0x02));
 
-  move(0x01);
-}
-
-void move(int id) {
-  //id
-  Serial2.write(id);
-  // commd
-  Serial2.write(0xFD);
-  //dir
-  Serial2.write(0x00);
-  //speed
-  Serial2.write(0xAA);
-  //acc
-  Serial2.write(0x03);
-  //value
-  // char pos[3] = [0x00,0x01,0x64];
-  // Serial2.write(pos,3);
+  // delay(400);
+  
 }
